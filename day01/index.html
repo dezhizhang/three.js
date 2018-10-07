@@ -4,9 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>three.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/69/three.js"></script>
+    <style>
+     body{
+         margin: 0;
+         overflow: hidden;
+     }
+    </style>
 </head>
 <body>
-    
+    <script>
+        //创建一个场景
+        let scene = new THREE.Scene();
+
+
+        let geometry = new THREE.BoxGeometry(100,100,100);
+        let material = new THREE.MeshLambertMaterial({color:'red'});
+
+        //创建模型对象
+        let mesh = new THREE.Mesh(geometry,material);
+        scene.add(mesh);
+
+        //添加灯光
+        let light = new THREE.PointLight('#fff');
+        light.position.set(300,400,200);
+        
+        scene.add(light);
+
+        //添加相机对象
+        let camera = new THREE.PerspectiveCamera(40,800/600,1,10000);
+        camera.position.set(200,200,200);
+        camera.lookAt(scene.position);
+
+        //创建渲染器
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setSize(800,600);
+
+        document.body.appendChild(renderer.domElement);
+
+        renderer.render(scene,camera);
+
+
+    </script>
 </body>
 </html>
