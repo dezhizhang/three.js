@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/three.js/r73/three.js"></script>
+    <title>Document</title>
+</head>
+<body>
+   <script>
+    // let scene =new  THREE.Scene();
+    // let camera = new THREE.PerspectiveCamera(75,window.innerWidth/innerHeight,1,1000);
+    // let renderer = new THREE.WebGLRenderer();
+
+    // renderer.setSize(window.innerWidth,window.innerHeight);
+    // renderer.setClearColor('#FFFFFF');
+    // document.body.appendChild(renderer.domElement);
+
+    // let geometry = new THREE.BoxGeometry( 2, 2, 2 );
+    // let material = new THREE.MeshBasicMaterial({color:'red'});
+
+    // let cube = new THREE.Mesh(geometry,material);
+
+    // scene.add(cube);
+    // camera.position.z = 5;
+    // render();
+
+    // function render(){
+    //     requestAnimationFrame(render)
+    //     cube.rotation.x+=0.01;
+    //     cube.rotation.y+=0.01;
+    //     cube.rotation.z+=0.01;
+    //     renderer.render(scene,camera)
+    // }
+
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75,window.innerWidth/innerHeight,1,1000);
+    let renderer = new THREE.WebGLRenderer();
+
+    renderer.setSize(window.innerWidth,window.innerHeight);
+    renderer.setClearColor('#FFFFFF');
+    document.body.appendChild(renderer.domElement);
+
+    let geometry = new THREE.BoxGeometry( 2, 2, 2 );
+    let material = new THREE.MeshBasicMaterial({color:'red'});
+
+    let cube = new THREE.Mesh(geometry,material);
+
+    scene.add(cube);
+    camera.position.z = 5;
+    render();
+
+    function render() {
+        requestAnimationFrame(render)
+        cube.rotation.x+=0.01;
+        cube.rotation.y+=0.01;
+        cube.rotation.z+=0.01;
+
+        renderer.render(scene,camera);
+    }
+
+
+
+
+  </script> 
+</body>
+</html>
