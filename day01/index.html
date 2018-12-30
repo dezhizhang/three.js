@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/three.js/47/Three.js"></script>
+    <style>
+        #canvas{
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+
+        let width = 400;
+        let height = 400;
+
+        //获取canvas元素
+        let canvas = document.getElementById('canvas');
+      
+        //定义渲染器
+        let renderer = new THREE.WebGLRenderer({
+            canvas:canvas
+        });
+
+        //定义场景
+        let scene = new THREE.Scene();
+
+        //设置像机
+        let camera =  new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
+
+       
+        renderer.setSize( width, height );
+        renderer.setClearColor( new THREE.Color(0xff0000),1.0);
+
+        renderer.render(scene,camera)
+    
+    </script>
+</body>
+</html>
