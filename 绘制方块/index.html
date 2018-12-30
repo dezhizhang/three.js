@@ -6,16 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.bootcss.com/three.js/47/Three.js"></script>
-    <style>
-        #canvas{
-            background: #fff;
-        }
-    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     <script>
 
+        //画布的大小
         let width = 400;
         let height = 400;
 
@@ -33,10 +29,12 @@
         //设置像机
         let camera =  new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
 
-       
-        renderer.setSize( width, height );
+        //定义渲染的大小
+        renderer.setSize( width, height / 2 );
+        //定义渲染的颜色
         renderer.setClearColor( new THREE.Color(0xff0000),1.0);
 
+        //渲染在画布中
         renderer.render(scene,camera)
     
     </script>
