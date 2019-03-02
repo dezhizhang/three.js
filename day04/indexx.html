@@ -7,6 +7,13 @@
     <title>Document</title>
     <script src="./js/three.js" type="text/javascript"></script>
     <script src="./js/SceneUtils.js" type="text/javascript"></script>
+    <style>
+    body{
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    </style>
 </head>
 <body>
     <script type="text/javascript">
@@ -51,7 +58,7 @@
                 let cube = new THREE.Mesh(cubeGeometry,cubeMaterial);
                 cube.position.x = -(planeGeometry.parameters.width/ 2) + 2 + (i * 5);
                 cube.position.y = 2;
-                cube.position.z = -(planeGeometry.parameters.height/ 2) + 2 + (i * 5);
+                cube.position.z = -(planeGeometry.parameters.height/ 2) + 2 + (j * 5);
                 scene.add(cube);
 
             }
@@ -110,10 +117,6 @@
 
         render();
         document.body.appendChild(renderer.domElement);
-        
-
-
-
     </script>
 </body>
 </html>
