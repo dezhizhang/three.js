@@ -50,6 +50,11 @@
            spotLight.position.set(-40,60,-10);
            spotLight.castShadow = true;
 
+           //添加环境光
+           let light = new THREE.AmbientLight(0x00ff00);
+           scene.add(light);
+
+
            scene.add(spotLight);
 
            document.body.appendChild(renderer.domElement);
