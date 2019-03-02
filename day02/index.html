@@ -16,6 +16,10 @@
         camera.position.z = 40;
         camera.lookAt(scene.position);
 
+        //增加雾化
+        scene.fog = new THREE.Fog(0xfffff,0.005,100);
+        
+
         //渲染器
         let renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(new THREE.Color(0xEEEEEE));
