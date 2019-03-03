@@ -1,8 +1,8 @@
 import adapter from './libs/weapp-adapter';
 import * as  THREE from './libs/three';
 
-let width = 400;
-let height = 400;
+let width = 375;
+let height = 667;
 
 //设置渲染器
 let renderer = new THREE.WebGLRenderer({
