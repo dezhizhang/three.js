@@ -2,17 +2,20 @@
 class GamePage{
     constructor(callbacks) {
         this.callbacks = callbacks;
+      
     }
 
     init() {
-        let height = 400;
-        let width = 400;
+
+        let height = window.innerWidth;
+        let width = window.innerHeight;
        
         let renderer = new THREE.WebGLRenderer({
             canvas:canvas
         });
         //定义场景
         let scene = new THREE.Scene();
+        this.scene = scene
         //定义象机
         let camera = new THREE.OrthographicCamera(-width/2,width/2,-height/2,height/2,-1000,1000);
         renderer.setClearColor(new THREE.Color(0x000000,1.0));
