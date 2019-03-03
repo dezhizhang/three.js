@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/three.js"></script>
+    <style>
+    body{
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript">
+        let width = 400;
+        let height = 400;
+
+        let canvas = document.getElementById('canvas');
+        let renderer = new THREE.WebGLRenderer({
+            canvas:canvas
+        });
+
+        //定义场景
+        let scene = new THREE.Scene();
+        let camera = new THREE.OrthographicCamera(-width/2,width/2,-height/2,height/2,-1000,1000);
+
+        renderer.setClearColor(new THREE.Color(0x000000,1.0));
+        renderer.setSize(width,height);
+
+        renderer.render(scene,camera);
+
+    </script>
+</body>
+</html>
