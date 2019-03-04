@@ -54,17 +54,10 @@
            scene.add(light);
 
            //平行光
-           let directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0);
-           directionalLight.position.set( 1,1,1);
-           directionalLight.castShadow = true;
-           scene.add(directionalLight);
-
-
-
-
-
-
-           
+            let directionalLight = new THREE.DirectionalLight(0xffffff);
+            directionalLight.position.set(1,2,1);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
            
            document.body.appendChild(renderer.domElement);
            renderer.render(scene,camera);
