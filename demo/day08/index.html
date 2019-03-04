@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <script type="text/javascript">
+    <script>
            let scene = new THREE.Scene();
            let camera = new THREE.PerspectiveCamera(70,window.innerWidth/window.innerHeight,0.1,1000);
            let renderer = new THREE.WebGLRenderer();
@@ -47,14 +47,20 @@
            sphere.position.set(20,6,0);
            scene.add(sphere);
 
-            //加入点光源
-            let spotLight = new THREE.SpotLight(0xff00ff);
-            spotLight.position.set(-40,60,-10);
-            spotLight.castShadow = true;
-            scene.add(spotLight);
+           //设置聚光灯光淅
+           let spotLight = new THREE.SpotLight('#ffffff');
+           spotLight.position.x = -40;
+           spotLight.position.y = 60;
+           spotLight.position.z = -12;
+
+           sphere.target = sphere;
+           scene.add(spotLight);
 
            document.body.appendChild(renderer.domElement);
-           renderer.render(scene,camera)
+           renderer.render(scene,camera);
+
+
+
 
     </script>
 </body>
