@@ -16,17 +16,18 @@
 </head>
 <body>
     <script>
+           
             let scene = new THREE.Scene();
-            let camera = new THREE.PerspectiveCamera(70,window.innerWidth/window.innerHeight,0.1,1000);
+            let camera = new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.01,1000);
             let renderer = new THREE.WebGLRenderer();
-            renderer.setClearColor(new THREE.Color(0xEEEEEEE));
+            renderer.setClearColor(new THREE.Color(0xEEEEEE));
             renderer.setSize(window.innerWidth,window.innerHeight);
             renderer.shadowMap.enabled = true;
+
 
             let planeGeometry = new THREE.PlaneGeometry(60,30);
             let planeMeterial = new THREE.MeshLambertMaterial({color:0XFFFFFF});
             let plane = new THREE.Mesh(planeGeometry,planeMeterial);
-            plane.rotation = -0.5 * Math.PI;
             plane.position.set(15,0,0);
             scene.add(plane);
 
