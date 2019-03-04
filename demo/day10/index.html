@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script  src="./js/three.js"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script>
+            let scene = new THREE.Scene();
+            let camera = new THREE.PerspectiveCamera(70,window.innerWidth/window.innerHeight,0.1,1000);
+            let renderer = new THREE.WebGLRenderer();
+            renderer.setClearColor(new THREE.Color(0xEEEEEEE));
+            renderer.setSize(window.innerWidth,window.innerHeight);
+            renderer.shadowMap.enabled = true;
+
+            let planeGeometry = new THREE.PlaneGeometry(60,30);
+            let planeMeterial = new THREE.MeshLambertMaterial({color:0XFFFFFF});
+            let plane = new THREE.Mesh(planeGeometry,planeMeterial);
+            plane.rotation = -0.5 * Math.PI;
+            plane.position.set(15,0,0);
+            scene.add(plane);
+
+      
+            let cubeGeometry = new THREE.BoxGeometry(5,5,5);
+            let cubmeMaterail = new THREE.MeshLambertMaterial({color:0xff00ff});
+            let cube = new THREE.Mesh(cubeGeometry,cubmeMaterail);
+            cube.castShadow = true;
+
+           cube.position.set(-4,3,0);
+           scene.add(cube);
+
+           camera.position.set(-25,30,25);
+           camera.lookAt(scene.position);
+
+            let light = new THREE.HemisphereLight(0xff00ff,0xffff00,1.0);
+            scene.add(light);
+
+            document.body.appendChild(renderer.domElement);
+            renderer.render(scene,camera);
+
+
+
+
+    </script>
+</body>
+</html>
