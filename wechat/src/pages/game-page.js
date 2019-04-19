@@ -2,11 +2,16 @@
 class GamePage{
     constructor(callbacks) {
         this.callbacks = callbacks;
-      
     }
 
     init() {
-        console.log('1');
+       let width = window.innerWidth;
+       let height = window.innerHeight;
+
+       let renderer = new THREE.WebGLRenderer();
+       let scene = new THREE.Scene();
+       this.scene = scene;
+        
     }
 
     restart() {

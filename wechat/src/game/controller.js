@@ -13,7 +13,6 @@ class GameController {
 
     restartGame = () => {
         this.gmaeView.restartGame();
-
     }
     //初始化页面
     initPages() {
@@ -23,9 +22,8 @@ class GameController {
 
         const gameOverPageCallbacks = {
             gameRestart: this.restartGame
-
-
         }
+
         this.gmaeView.initGameOverPage(gameOverPageCallbacks);
         this.gmaeView.initGamePage(gamePageCallbacks)
     }
