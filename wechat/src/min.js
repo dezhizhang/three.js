@@ -8,11 +8,11 @@ class Main {
 
     }
 
-    init() {
+    static init() {
         game.init();
 
     }
 
 }
 
-export default  new Main();
+export default  Main;

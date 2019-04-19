@@ -16,19 +16,12 @@ class GameView {
     restartGame() {
         this.gamePage.restart()
     }
-
-
-    initGameOverPage(callbacks) {
-      
     
+    initGameOverPage(callbacks) {
         this.gameOverPage = new GameOverPage(callbacks);
-        this.gameOverPage.init({
-            scene:this.gamePage.scene
-        });
-
+      
     }
     initGamePage(callbacks) {
-        
         this.gamePage = new GamePage(callbacks);
         this.gamePage.init();
 
