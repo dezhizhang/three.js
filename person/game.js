@@ -1,4 +1,4 @@
-let scene,camera,renderer,mesh;
+let scene,camera,renderer,mesh,cube;
 
 //init函数
 function init() {
@@ -13,16 +13,25 @@ function init() {
     renderer = new THREE.WebGLRenderer();
     renderer.setClearColor(new THREE.Color(0xEEEEEE,1.0));
     renderer.setSize(window.innerWidth,window.innerHeight);
+    //创建立方体
+    let cubeGeometry = new THREE.BoxGeometry(1,1,1);
+    let cubeMaterial = new THREE.MeshBasicMaterial({color:0xff00ff});
+    cube = new THREE.Mesh(cubeGeometry,cubeMaterial);
+    scene.add(cube);
+
     //加入到html
     document.body.appendChild(renderer.domElement);
+    render();
 }
 
 //帧循环函数
-function aimate() {
+function render() {
+    requestAnimationFrame(render);
+    cube.rotation.x += 0.1;
+    cube.rotation.y += 0.1;
     renderer.render(scene,camera);
 }
 
-window.onload = function() {
-    init();
-    aimate();
-}
+window.onload =  init;
+
+  
