@@ -13,14 +13,21 @@ function init() {
     renderer = new THREE.WebGLRenderer();
     renderer.setClearColor(new THREE.Color(0x000000,1.0));
     renderer.setSize(window.innerWidth,window.innerHeight);
+    renderer.shadowMapEnabled = true;
     //创建平面
     let planeGeometry = new THREE.PlaneGeometry(10,10);
     let planeMaterial = new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide});
     let plane = new THREE.Mesh(planeGeometry,planeMaterial);
+    
     plane.rotation.x = -0.5 * Math.PI;
     plane.position.y = -2;
     plane.position.z = 0;
     scene.add(plane);
+    //创建灯光
+    let spotLight = new THREE.SpotLight(0xffffff);
+    spotLight.position.set(10,10,10);
+    spotLight.castShadow = true;
+    scene.add(spotLight);
     //创建立方体
     let cubeGeometry = new THREE.BoxGeometry(1,1,1);
     let cubeMaterial = new THREE.MeshBasicMaterial({color:0xff00ff});
