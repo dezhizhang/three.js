@@ -1,32 +1,39 @@
-
-import gmaeView from './view';
-import gameModel from './model';
+import gameView from './view'
+import gameModel from './model'
 
 class GameController {
-    constructor(){
-        this.gmaeView = gmaeView;
-        this.gameModel = gameModel;
-    }
-    showGameOverPage = () => {
-        this.gmaeView.showGameOverPage();
-    }
+  constructor () {
+    this.gameView = gameView
+    this.gameModel = gameModel
+    this.gameModel.stageChanged.attach((sender, args) => {
+      const stageName = args.stage
+      switch (stageName) {
+        case 'game-over':
+          this.gameView.showGameOverPage()
+          break
+        case 'game':
+          this.gameView.showGamePage()
+          break
+        default:
+      }
+    })
+  }
 
-    restartGame = () => {
-        this.gmaeView.restartGame();
+  initPages () {
+    const gamePageCallbacks = {
+      showGameOverPage: () => {
+        this.gameModel.setStage('game-over')
+      }
     }
-    //初始化页面
-    initPages() {
-        const gamePageCallbacks = {
-            showGameOverPage:this.showGameOverPage
-        }
-
-        const gameOverPageCallbacks = {
-            gameRestart: this.restartGame
-        }
-
-        this.gmaeView.initGameOverPage(gameOverPageCallbacks);
-        this.gmaeView.initGamePage(gamePageCallbacks)
+    const gameOverPagesCallbacks = {
+      gameRestart: () => {
+        this.gameModel.setStage('game')
+      }
     }
+    this.gameView.initGamePage(gamePageCallbacks)
+    this.gameView.initGameOverPage(gameOverPagesCallbacks)
+    this.gameModel.setStage('game')
+  }
 }
 
-export default new GameController();
+export default new GameController()

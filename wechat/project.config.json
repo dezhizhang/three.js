@@ -1,5 +1,5 @@
 {
-	"description": "项目配置文件",
+	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
 	},
@@ -8,16 +8,12 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true,
-		"autoAudits": false
+		"newFeature": true
 	},
 	"compileType": "game",
-	"libVersion": "2.6.1",
-	"appid": "wx3968786979c644d1",
-	"projectname": "wechat",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
+	"libVersion": "2.2.1",
+	"appid": "wx57889c8e09b1d159",
+	"projectname": "wxJump-mk-1",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
