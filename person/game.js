@@ -1,4 +1,4 @@
-let scene,camera,renderer,mesh,cube,plane;
+let scene,camera,renderer,mesh,cube,plane,keyCode
 
 //init函数
 function init() {
@@ -33,6 +33,10 @@ function init() {
     let cubeMaterial = new THREE.MeshBasicMaterial({color:0xff00ff});
     cube = new THREE.Mesh(cubeGeometry,cubeMaterial);
     scene.add(cube);
+    document.addEventListener('keydown',(ev) => {
+        keyCode = ev.keyCode 
+
+    })
     //加入到html
     document.body.appendChild(renderer.domElement);
     render();
@@ -43,7 +47,12 @@ function render() {
     requestAnimationFrame(render);
     cube.rotation.x += 0.1;
     cube.rotation.y += 0.1;
+    if(keyCode == 37) {
+        camera.rotation.y += 0.002 * Math.PI;
+    }
     renderer.render(scene,camera);
+
+    
 }
 
 window.onload =  init;
