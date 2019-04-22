@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="../libs/three.js"></script>
+    <script type="text/javascript" src="../libs/stats.js"></script>
+    <script type="text/javascript" src="../libs/dat.gui.js"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    
+<div id="stats"></div>
+<div id="box"></div>
+<script type="text/javascript">
+
+    let step = 0;
+    let spGroup = '' //管道组
+    let tubeMesh = '' //道材质
+    function init() {
+
+        //初始化stats
+        let stats = initStats();
+        //创建场景
+        let scene = new THREE.Scene();
+        //创建相机
+        let camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,0.1,1000);
+        //设置相机的位置
+        camera.position.x = -30;
+        camera.position.y = 40;
+        camera.position.z = 50;
+        camera.lookAt(new THREE.Vector3(10,0,0));
+        //创建渲染器
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(new THREE.Color(0xEEEEEE,1.0));
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        renderer.shadowMapEnabled = true;
+        //添加到html
+        let oBox = document.getElementById('box');
+        oBox.appendChild(renderer.domElement);
+        // setup the control gui
+        var controls = new function () {
+
+            this.numberOfPoints = 5;
+            this.segments = 64;
+            this.radius = 1;
+            this.radiusSegments = 8;
+            this.closed = false;
+            this.points = [];
+            // we need the first child, since it's a multimaterial
+
+            this.newPoints = function () {
+                var points = [];
+                for (var i = 0; i < controls.numberOfPoints; i++) {
+                    var randomX = -20 + Math.round(Math.random() * 50);
+                    var randomY = -15 + Math.round(Math.random() * 40);
+                    var randomZ = -20 + Math.round(Math.random() * 40);
+
+                    points.push(new THREE.Vector3(randomX, randomY, randomZ));
+                }
+                controls.points = points;
+                controls.redraw();
+            };
+
+            this.redraw = function () {
+                scene.remove(spGroup);
+                scene.remove(tubeMesh);
+                generatePoints(controls.points, controls.segments, controls.radius, controls.radiusSegments, controls.closed);
+            };
+
+        };
+
+        var gui = new dat.GUI();
+        gui.add(controls, 'newPoints');
+        gui.add(controls, 'numberOfPoints', 2, 15).step(1).onChange(controls.newPoints);
+        gui.add(controls, 'segments', 0, 200).step(1).onChange(controls.redraw);
+        gui.add(controls, 'radius', 0, 10).onChange(controls.redraw);
+        gui.add(controls, 'radiusSegments', 0, 100).step(1).onChange(controls.redraw);
+        gui.add(controls, 'closed').onChange(controls.redraw);
+
+
+        controls.newPoints();
+
+
+        render();
+        //创建几何体
+        function generatePoints(points,segments,radius,radiusSegments,closed) {
+            spGroup = new THREE.Object3D();
+            let material = new THREE.MeshBasicMaterial({color:0xff0000,transparent:false});
+            points.forEach(function(point) {
+                let spGeom = new THREE.SphereGeometry(0.2);
+                let spMesh = new THREE.Mesh(spGeom,material);
+                spMesh.position.copy(point);
+                spGroup.add(spMesh);
+            })
+            scene.add(spGroup);
+            let tubeGeometry = new THREE.TubeGeometry(new THREE.SplineCurve3(points),segments,radius,radiusSegments,closed);
+            tubeMesh = createMesh(tubeGeometry);
+            scene.add(tubeMesh);
+
+        }
+        //创建材质
+        function createMesh(geom) {
+            let meshMaterial = new THREE.MeshBasicMaterial({color:0x00ff00,transparent:true,opacity:0.2});
+            let wireFrameMat = new THREE.MeshBasicMaterial();
+            wireFrameMat.wireframe = true;
+            let mesh = THREE.SceneUtils.createMultiMaterialObject(geom,[meshMaterial,wireFrameMat]);
+            return mesh
+        }
+        //渲染
+        function render() {
+            stats.update();
+            spGroup.rotation.y = step;
+            tubeMesh.rotation.y = step += 0.01;
+            requestAnimationFrame(render);
+            renderer.render(scene,camera);
+
+        }
+        function initStats() {
+            let stats = new Stats();
+            stats.setMode(0);
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.left = '0px';
+            stats.domElement.style.top = '0px';
+            let oStats = document.getElementById('stats');
+            oStats.appendChild(stats.domElement);
+            return stats;
+        }
+    }
+    window.onload = init;
+</script>
+</body>
+</html>
