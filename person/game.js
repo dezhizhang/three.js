@@ -11,14 +11,14 @@ function init() {
     camera.lookAt(new THREE.Vector3(0,0,0));
     //创建渲染器
     renderer = new THREE.WebGLRenderer();
-    renderer.setClearColor(new THREE.Color(0x000000,1.0));
+    renderer.setClearColor(new THREE.Color(0x00000,1.0));
     renderer.setSize(window.innerWidth,window.innerHeight);
     renderer.shadowMapEnabled = true;
     //创建平面
     let planeGeometry = new THREE.PlaneGeometry(10,10);
-    let planeMaterial = new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide});
+    let planeMaterial = new THREE.MeshBasicMaterial({color:0xEEEEEE,side:THREE.DoubleSide});
     let plane = new THREE.Mesh(planeGeometry,planeMaterial);
-    
+
     plane.rotation.x = -0.5 * Math.PI;
     plane.position.y = -2;
     plane.position.z = 0;
