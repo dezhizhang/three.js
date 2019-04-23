@@ -25,12 +25,11 @@
 		</style>
 	</head>
 	<body>
-
-	
 		<script>
-			var container, stats;
-			var camera, scene, renderer;
-			var radius = 100, theta = 0;
+			let container,stats;
+			let camera,scene,renderer;
+			let radius = 100,theta = 0;
+
 			init();
 			animate();
 			function init() {
@@ -89,21 +88,21 @@
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize(window.innerWidth,window.innerHeight);
 			}
-			//
 			function animate() {
-				requestAnimationFrame( animate );
+				requestAnimationFrame(animate);
 				render();
 				stats.update();
 			}
 			function render() {
 				theta += 0.1;
-				camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
-				camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
-				camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
-				camera.lookAt( scene.position );
-				renderer.render( scene, camera );
+				camera.position.x = radius * Math.sin(THREE.Math.degToRad(theta));
+				camera.position.y = radius * Math.sin(THREE.Math.degToRad(theta));
+				camera.position.z = radius * Math.cos(THREE.Math.degToRad(theta));
+				camera.lookAt(scene.position);
+				renderer.render(scene,camera);
+
 			}
 		</script>
 
