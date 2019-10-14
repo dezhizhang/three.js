@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>平面几何体</title>
+    <script type="text/javascript" src="./libs/three.js"></script>
+    <script type="text/javascript" src="./libs/stats.js"></script>
+    <script type="text/javascript" src="./libs/dat.gui.js"></script>
+    <style>
+        body {
+            /* set margin to 0 and overflow to hidden, to go fullscreen */
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div id="Stats-output">
+</div>
+<!-- Div which will hold the Output -->
+<div id="WebGL-output">
+</div>
+
+<!-- Javascript code that runs our Three.js examples -->
+<script type="text/javascript">
+
+    // once everything is loaded, we run our Three.js stuff.
+    function init() {
+;
+        //初始化状态
+        let stats = initStats();
+
+        //创建场景
+        let scene = new THREE.Scene();
+        //创建相机
+        let camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,0.1,1000);
+
+        //创建渲染器
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(new THREE.Color(0xEEEEEE,1.0));
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        renderer.shadowMapEnabled = true;
+
+        //创建平面
+        let plane = createMesh(new THREE.PlaneGeometry(10, 14, 4, 4));
+        scene.add(plane);
+
+        //设置相机的位置
+        camera.position.x = -20;
+        camera.position.y = 30;
+        camera.position.z = 40;
+        camera.lookAt(new THREE.Vector3(10,0,0));
+
+        //添加点光源
+        let spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(-40,60,-10);
+        scene.add(spotLight);
+
+        //添加到html中
+        let webGL = document.getElementById('WebGL-output');
+        webGL.appendChild(renderer.domElement);
+
+        //添加控制器
+        let controls = new function() {
+            this.width = plane.children[0].geometry.parameters.width;
+            this.height = plane.children[0].geometry.parameters.height;
+            this.widthSegments = plane.children[0].geometry.parameters.widthSegments;
+            this.heightSegments = plane.children[0].geometry.parameters.heightSegments;
+
+            this.redraw = function() {
+                scene.remove(plane);
+                plane.createMesh(new THREE.PlaneGeometry(control.width,control.height,Math.round(control.widthSegments),Math.round(control.heightSegments)));
+                scene.add(plane);
+
+            }
+        }
+
+        //添加gui
+        let gui = new dat.GUI();
+        gui.add(controls,'width',0,40).onChange(controls.redraw);
+        gui.add(controls,'height',0,40).onChange(controls.redraw);
+        gui.add(controls,'widthSegments',0,10).onChange(controls.redraw);
+        gui.add(controls,'heightSegments',0,10).onChange(controls.redraw);
+        render();
+
+        function createMesh(geom) {
+            let meshMaterial = new THREE.MeshNormalMaterial();
+            let wireFrameMat = new THREE.MeshBasicMaterial();
+            wireFrameMat.wireframe = true;
+
+            let plane = THREE.SceneUtils.createMultiMaterialObject(geom, [meshMaterial, wireFrameMat]);
+            return plane
+        }
+        var step = 0;
+        function render() {
+            stats.update();
+            plane.rotation.y = step += 0.01;
+            requestAnimationFrame(render);
+            renderer.render(scene,camera);
+
+        }
+
+        function initStats() {
+
+            var stats = new Stats();
+            stats.setMode(0); // 0: fps, 1: ms
+
+            // Align top-left
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.left = '0px';
+            stats.domElement.style.top = '0px';
+
+            document.getElementById("Stats-output").appendChild(stats.domElement);
+
+            return stats;
+        }
+    }
+    window.onload = init;
+</script>
+</body>
+</html>
