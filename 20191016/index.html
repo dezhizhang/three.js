@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example 05.05 - Basic 3D geometries - Sphere</title>
+    <script type="text/javascript" src="./libs/three.js"></script>
+    <script type="text/javascript" src="./libs/stats.js"></script>
+    <script type="text/javascript" src="./libs/dat.gui.js"></script>
+    <style>
+        body {
+            /* set margin to 0 and overflow to hidden, to go fullscreen */
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div id="Stats-output"></div>
+<div id="WebGL-output"></div>
+
+<script type="text/javascript">
+    function init() {
+        //初始化
+        let stats = initStats();
+        //创建场景
+        let scene = new THREE.Scene();
+        //创建相机
+        let camera = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight,0.1,10000);
+
+        //创建渲染器
+        let renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(new THREE.Color(0xEEEEEE,1.0));
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        renderer.shadowMapEnabled = true;
+
+        //创建几何体
+        let sphere = createMesh(new THREE.SphereGeometry(4,10,10));
+        scene.add(sphere);
+
+        //设置相机的位置
+        camera.position.x = -20;
+        camera.position.y = 30;
+        camera.position.z = 40;
+        camera.lookAt(new THREE.Vector3(10,0,0));
+        let webGL = document.getElementById('WebGL-output');
+        webGL.appendChild(renderer.domElement);
+
+
+
+
+        // call the render function
+        var step = 0;
+
+
+        // setup the control gui
+        var controls = new function () {
+            // we need the first child, since it's a multimaterial
+            this.radius = sphere.children[0].geometry.parameters.radius;
+            this.widthSegments = sphere.children[0].geometry.parameters.widthSegments;
+            this.heightSegments = sphere.children[0].geometry.parameters.heightSegments;
+            this.phiStart = 0;
+            this.phiLength = Math.PI * 2;
+            this.thetaStart = 0;
+            this.thetaLength = Math.PI;
+
+
+            this.redraw = function () {
+                // remove the old plane
+                scene.remove(sphere);
+                // create a new one
+                sphere = createMesh(new THREE.SphereGeometry(controls.radius, controls.widthSegments, controls.heightSegments, controls.phiStart, controls.phiLength, controls.thetaStart, controls.thetaLength));
+                // add it to the scene.
+                scene.add(sphere);
+            };
+        };
+
+        var gui = new dat.GUI();
+        gui.add(controls, 'radius', 0, 40).onChange(controls.redraw);
+        gui.add(controls, 'widthSegments', 0, 20).onChange(controls.redraw);
+        gui.add(controls, 'heightSegments', 0, 20).onChange(controls.redraw);
+        gui.add(controls, 'phiStart', 0, 2 * Math.PI).onChange(controls.redraw);
+        gui.add(controls, 'phiLength', 0, 2 * Math.PI).onChange(controls.redraw);
+        gui.add(controls, 'thetaStart', 0, 2 * Math.PI).onChange(controls.redraw);
+        gui.add(controls, 'thetaLength', 0, 2 * Math.PI).onChange(controls.redraw);
+
+
+        render();
+
+        function createMesh(geom) {
+
+            // assign two materials
+            var meshMaterial = new THREE.MeshNormalMaterial();
+            meshMaterial.side = THREE.DoubleSide;
+            var wireFrameMat = new THREE.MeshBasicMaterial();
+            wireFrameMat.wireframe = true;
+
+            // create a multimaterial
+            var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [meshMaterial, wireFrameMat]);
+
+            return mesh;
+        }
+
+        function render() {
+            stats.update();
+
+            sphere.rotation.y = step += 0.01;
+
+            // render using requestAnimationFrame
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+
+        function initStats() {
+
+            var stats = new Stats();
+            stats.setMode(0); // 0: fps, 1: ms
+
+            // Align top-left
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.left = '0px';
+            stats.domElement.style.top = '0px';
+
+            document.getElementById("Stats-output").appendChild(stats.domElement);
+
+            return stats;
+        }
+    }
+    window.onload = init;
+</script>
+</body>
+</html>
